@@ -92,7 +92,7 @@ def persist_messages(
         }
         compression_extension = extension_mapping.get(compression_method.upper())
         if compression_extension is None:
-            LOGGER.warning("unsuported compression method.")
+            LOGGER.warning("unsupported compression method.")
             compression_extension = ""
             compression_method = None
     filename_separator = "-"
@@ -129,6 +129,7 @@ def persist_messages(
                     flattened_record = flatten(message["record"])
                     # Once the record is flattenned, it is added to the final record list, which will be stored in the parquet file.
                     w_queue.put((MessageType.RECORD, stream_name, flattened_record))
+                    LOGGER.warning(str(flattened_record))
                     state = None
                 elif message_type == "STATE":
                     LOGGER.debug("Setting state to {}".format(message["value"]))
@@ -210,6 +211,7 @@ def persist_messages(
                         gc.collect()
             elif message_type == MessageType.SCHEMA:
                 schemas[stream_name] = record
+                LOGGER.warning("HELLOOOO!!!" + str(record))
             elif message_type == MessageType.EOF:
                 files_created.append(
                     write_file(current_stream_name, records.pop(current_stream_name))

@@ -11,7 +11,7 @@ LOGGER.setLevel(os.getenv("LOGGER_LEVEL", "INFO"))
 
 
 def flatten(dictionary, parent_key="", sep="__"):
-    """Function that flattens a nested structure, using the separater given as parameter, or uses '__' as default
+    """Function that flattens a nested structure, using the separator given as parameter, or uses '__' as default
     E.g:
      dictionary =  {
                         'key_1': 1,
@@ -42,7 +42,7 @@ def flatten(dictionary, parent_key="", sep="__"):
 
 
 def flatten_schema(dictionary, parent_key="", sep="__"):
-    """Function that flattens a nested structure, using the separater given as parameter, or uses '__' as default
+    """Function that flattens a nested structure, using the separator given as parameter, or uses '__' as default
     E.g:
      dictionary =  {
                         'key_1': {'type': ['null', 'integer']},
@@ -82,7 +82,7 @@ def flatten_schema(dictionary, parent_key="", sep="__"):
         for k, v in dictionary.items():
             new_key = parent_key + sep + k if parent_key else k
             if "type" not in v:
-                LOGGER.warning(f"SCHEMA with limitted support on field {k}: {v}")
+                LOGGER.warning(f"SCHEMA with limited support on field {k}: {v}")
             if "object" in v.get("type", []):
                 items.extend(flatten_schema(v.get("properties"), new_key, sep=sep))
             else:
